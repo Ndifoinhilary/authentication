@@ -31,8 +31,13 @@ INSTALLED_APPS = [
     # my apps and you can add yours depending on your project
     "Auth",
     "authwithemailverify",
+    # third party apps
+    "crispy_bootstrap4",
+    "crispy_forms",
 ]
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -48,7 +53,7 @@ ROOT_URLCONF = "authentication.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

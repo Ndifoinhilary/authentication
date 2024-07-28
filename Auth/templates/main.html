@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <title>Home</title>
+</head>
+<body>
+    <nav class="navbar">
+       
+        
+        {% if not request.user.is_authenticated %}
+        <a href="{% url 'authwithemailverify:signup' %}">SignUp</a>
+        <a href="{% url 'Auth:login' %}">Login</a>
+        {% else %}
+        <a href="{% url 'Auth:home' %}">Home</a>
+        <a href="{% url 'Auth:logout' %}">Logout</a>
+        {% endif %}
+        
+    </nav>
+
+        {% block content %}
+          
+        {% endblock content %}
+        </body>
