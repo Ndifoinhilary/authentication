@@ -7,19 +7,19 @@ from django.core.mail import send_mail
 
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from django.utils import  timezone
+from django.utils import timezone
 
 from core.models import OtpToken
 
 # Create your views here.
 
 User = get_user_model()
-def index(request):
 
+
+def index(request):
     print(request.user.is_authenticated)
 
-    return  render(request, 'home.html')
-
+    return render(request, 'home.html')
 
 
 def register(request):
@@ -29,7 +29,7 @@ def register(request):
         email = request.POST['email']
 
         if password1 == password2:
-            user  = User.objects.filter(email=email)
+            user = User.objects.filter(email=email)
             if user.exists():
                 messages.error(request, 'Email already registered.')
                 return redirect(reverse('register'))
@@ -41,11 +41,10 @@ def register(request):
             messages.success(request, 'Account created.')
             return redirect(reverse('opt'))
 
-    return  render(request, 'signup.html' )
+    return render(request, 'signup.html')
 
 
-def  login_view(request):
-
+def login_view(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -57,18 +56,14 @@ def  login_view(request):
             return redirect(reverse('index'))
         messages.error(request, 'Invalid email or password.')
         return redirect(reverse('login'))
-    return  render(request, 'login.html')
-
-
+    return render(request, 'login.html')
 
 
 def enter_opt(request):
     email = request.session['email']
 
-
     user = User.objects.get(email=email)
     otp_user = OtpToken.objects.filter(user=user).last()
-
 
     if request.method == 'POST':
         otp = request.POST['opt']
@@ -83,13 +78,10 @@ def enter_opt(request):
         else:
             messages.error(request, 'Invalid OTP.')
 
-
-    return  render(request, 'opt.html')
-
+    return render(request, 'opt.html')
 
 
 def resend_opt(request):
-
     if request.method == 'POST':
         email = request.POST['email']
         user = User.objects.filter(email=email)
@@ -112,12 +104,7 @@ def resend_opt(request):
 
     return render(request, 'send_opt.html')
 
+
 def logout_view(request):
     logout(request)
-    return  redirect(reverse('index'))
-
-
-
-
-
-
+    return redirect(reverse('index'))
